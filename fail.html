@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>お支払いが完了しませんでした｜KOKOIKO</title>
+<meta name="description" content="お支払いが完了しませんでした">
+<meta property="og:title" content="お支払いが完了しませんでした｜KOKOIKO">
+<meta property="og:description" content="お支払いが完了しませんでした">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/assets/img/logo.jpg">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/assets/img/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/data.js"></script>
+
+</head>
+<body>
+<div class="testmode">テストモード：実際の請求は発生しません</div><header class="top"><div class="wrap">
+<a class="brand" href="/"><img src="/assets/img/logo.jpg" alt="KOKOIKO（ここいこ）ロゴ"><span>KOKOIKO<small>ここいこ</small></span></a>
+<a class="back" href="/">← トップへ戻る</a>
+</div></header>
+<main class="wrap center" style="padding-top:30px">
+<h1 style="font-size:20px">お支払いが完了しませんでした</h1>
+<p class="note" id="msg">お支払いはキャンセルされました。料金は請求されていません。</p>
+<p class="note" id="code"></p>
+<a class="btn" id="retry" href="/">もう一度お支払いする</a>
+<p style="margin-top:16px"><a href="/">トップへ戻る</a></p>
+</main>
+<footer><div class="wrap">
+<b>KOKOIKO（ここいこ）</b><br>
+所在地: 大韓民国 ソウル特別市 松坡区<br>
+お問い合わせ: LINE / メール（受付後のご連絡はLINE・メールで行います）
+<div style="margin-top:10px;line-height:1.6">事業者情報（韓国）<br>商号（상호）：{商号}<br>代表者（대표자명）：{代表者名}<br>事業者登録番号（사업자등록번호）：{事業者登録番号}<br>通信販売業申告番号（통신판매업 신고번호）：{通信販売業申告番号}<br>所在地（사업장 주소）：{住所}<br>電話番号（유선번호）：+82-{電話番号}</div>
+<ul>
+<li><a href="/tokushoho.html">特定商取引法に基づく表記</a></li>
+<li><a href="/tokushoho.html#cancel">キャンセルポリシー</a></li>
+<li><a href="/tokushoho.html#privacy">プライバシーポリシー</a></li>
+<li><a href="/tokushoho.html#terms">利用規約</a></li>
+</ul>
+<p style="margin-top:12px">© KOKOIKO</p>
+</div></footer>
+
+<script>
+// 失敗ページでは承認APIを呼ばない
+var q=new URLSearchParams(location.search), b={};
+try{b=JSON.parse(sessionStorage.getItem("kokoiko_booking")||"{}");}catch(e){}
+if(q.get("code")&&q.get("code")!=="PAY_PROCESS_CANCELED"){document.getElementById("msg").textContent=q.get("message")||"エラーが発生しました。";}
+if(q.get("code")) document.getElementById("code").textContent="エラーコード："+q.get("code");
+if(b.back) document.getElementById("retry").href=b.back;
+</script>
+</body></html>

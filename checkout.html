@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>お申し込み・お支払い｜KOKOIKO</title>
+<meta name="description" content="KOKOIKOツアーのお申し込み">
+<meta property="og:title" content="お申し込み・お支払い｜KOKOIKO">
+<meta property="og:description" content="KOKOIKOツアーのお申し込み">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/assets/img/logo.jpg">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/assets/img/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/data.js"></script>
+<script src="https://js.tosspayments.com/v2/standard"></script>
+</head>
+<body>
+<div class="testmode" id="tm" hidden>テストモード：実際の請求は発生しません</div><header class="top"><div class="wrap">
+<a class="brand" href="/"><img src="/assets/img/logo.jpg" alt="KOKOIKO（ここいこ）ロゴ"><span>KOKOIKO<small>ここいこ</small></span></a>
+<a class="back" href="/">← トップへ戻る</a>
+</div></header>
+<main class="wrap">
+<h1 style="font-size:20px;margin:20px 0 4px">お申し込み・お支払い</h1>
+<p class="note">会員登録は不要です。入力は4項目だけです。</p>
+
+<section style="margin-top:18px"><h2>ご予約内容</h2>
+<div class="card" id="summary">
+<div class="row"><span>ツアー</span><span id="sName">—</span></div>
+<div class="row"><span>出発日</span><span id="sDate">—</span></div>
+<div class="row"><span>人数</span><span id="sPeople">—</span></div>
+<div class="row total"><span>お支払い金額</span><span id="sAmount">—</span></div>
+<div class="row" style="border-bottom:0"><span class="note">円換算（目安）</span><span class="note" id="sYen">—</span></div>
+<p class="note" style="margin:6px 0 0" id="curNote">お支払いは韓国ウォンで行われます。ご請求の円額は、カード会社のレートにより多少異なります。海外決済のため、カード会社により手数料が発生する場合があります。</p>
+</div></section>
+
+<section><h2>お客さま情報</h2>
+<form class="form" id="form" novalidate>
+<label for="name">お名前（代表者）<span class="req">必須</span></label>
+<input id="name" name="name" autocomplete="name" placeholder="例：山田 花子" required>
+<div class="err" data-for="name">お名前を入力してください。</div>
+<label for="tel">電話番号<span class="req">必須</span></label>
+<input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="例：090-1234-5678" required>
+<div class="err" data-for="tel">電話番号を入力してください。</div>
+<label for="line">LINE ID<span class="req">必須</span></label>
+<input id="line" name="line" autocomplete="off" placeholder="例：hanako_yamada" required>
+<div class="hint">出発確定・集合場所のご案内に使います。</div>
+<div class="err" data-for="line">LINE IDを入力してください。</div>
+<label for="email">メールアドレス<span class="req">必須</span></label>
+<input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="例：hanako@example.com" required>
+<div class="err" data-for="email">メールアドレスを正しく入力してください。</div>
+</form></section>
+
+<div class="rule" id="rule">
+<b>キャンセル・出発確定のルール</b>
+<ul>
+<li>出発3日前までのキャンセルは全額返金します。それ以降は返金できません（天災地変、ご本人または二親等以内のご家族のご不幸の場合を除く）。</li>
+<li>最少催行人数は10名です（定員ではありません）。10名に達した時点で出発確定となり、LINEでお知らせします。</li>
+<li>出発3日前までに10名に達しない場合はツアー中止となり、全額返金します。</li>
+</ul>
+</div>
+
+<section><h2>お支払い方法</h2>
+<div id="payment-method"></div>
+<div id="agreement"></div>
+<p class="note" id="payErr" style="color:#c2405a"></p>
+<p class="note">PayPay・コンビニ払いは準備中です。</p>
+</section>
+<div class="rule" id="curBox" style="margin-bottom:12px"><b>お支払い通貨と為替レートについて</b>
+<ul><li>お支払いは韓国ウォン（KRW）で行われます。日本円の表示は参考価格です。</li>
+<li>ご請求額（円）は、カード会社が処理する時点の為替レートと海外事務手数料により変わる場合があります。</li></ul></div>
+<button class="btn" id="pay" type="button" disabled>読み込み中…</button>
+<p class="note center" style="margin-top:10px">販売：KOKOIKO（ソウル特別市松坡区）／<a href="/tokushoho.html">特定商取引法に基づく表記</a></p>
+</main>
+<footer><div class="wrap">
+<b>KOKOIKO（ここいこ）</b><br>
+所在地: 大韓民国 ソウル特別市 松坡区<br>
+お問い合わせ: LINE / メール（受付後のご連絡はLINE・メールで行います）
+<div style="margin-top:10px;line-height:1.6">事業者情報（韓国）<br>商号（상호）：{商号}<br>代表者（대표자명）：{代表者名}<br>事業者登録番号（사업자등록번호）：{事業者登録番号}<br>通信販売業申告番号（통신판매업 신고번호）：{通信販売業申告番号}<br>所在地（사업장 주소）：{住所}<br>電話番号（유선번호）：+82-{電話番号}</div>
+<ul>
+<li><a href="/tokushoho.html">特定商取引法に基づく表記</a></li>
+<li><a href="/tokushoho.html#cancel">キャンセルポリシー</a></li>
+<li><a href="/tokushoho.html#privacy">プライバシーポリシー</a></li>
+<li><a href="/tokushoho.html#terms">利用規約</a></li>
+</ul>
+<p style="margin-top:12px">© KOKOIKO</p>
+</div></footer>
+
+<script>
+(async function(){
+var K=window.KOKOIKO, q=new URLSearchParams(location.search);
+var pid=q.get("p"), date=q.get("d"), n=parseInt(q.get("n")||"1",10), inf=parseInt(q.get("i")||"0",10);
+var prod=K.products[pid], payBtn=document.getElementById("pay"), err=document.getElementById("payErr");
+if(!prod||!/^\d{4}-\d{2}-\d{2}$/.test(date||"")||!(n>=1&&n<=20)){err.textContent="予約内容が正しくありません。ツアーページからやり直してください。";payBtn.textContent="ツアーページへ戻る";payBtn.disabled=false;payBtn.onclick=function(){location.href="/";};return;}
+document.getElementById("sName").textContent=prod.name;
+document.getElementById("sDate").textContent=K.fmtDate(date);
+document.getElementById("sPeople").textContent="大人・子ども "+n+"名"+(inf?"／2歳未満 "+inf+"名（無料）":"");
+try{
+  var cfg=await (await fetch("/api/config")).json();
+  if(!cfg.clientKey) throw new Error(cfg.message||"設定エラー");
+  if(cfg.testMode) document.getElementById("tm").hidden=false;
+  var ord=await fetch("/api/order",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({productId:pid,people:n})});
+  var order=await ord.json(); if(!ord.ok) throw new Error(order.message);
+  if(order.currency==="KRW"){
+    document.getElementById("sAmount").textContent=K.fmtKrw(order.amount);
+    document.getElementById("sYen").textContent="約"+K.fmtYen(K.yen(order.amount))+"（"+K.rate.asOf+"のレート）";
+  } else {
+    document.getElementById("sAmount").textContent=K.fmtYen(order.amount)+"（税込）";
+    document.getElementById("sYen").parentNode.hidden=true;
+    document.getElementById("curNote").textContent="お支払いは日本円で行われます。";document.getElementById("curBox").hidden=true;
+  }
+  var toss=TossPayments(cfg.clientKey);
+  var widgets=toss.widgets({customerKey:TossPayments.ANONYMOUS});
+  if(q.has("qa")) window.widgets=widgets; // 保安QA用（テスト後に削除）
+  await widgets.setAmount({currency:order.currency,value:order.amount});
+  await Promise.all([
+    widgets.renderPaymentMethods({selector:"#payment-method",variantKey:"DEFAULT"}),
+    widgets.renderAgreement({selector:"#agreement",variantKey:"AGREEMENT"})
+  ]);
+  payBtn.disabled=false; payBtn.textContent="お支払いへ進む";
+  payBtn.onclick=async function(){
+    var ok=true, f=document.getElementById("form");
+    ["name","tel","line","email"].forEach(function(id){
+      var el=document.getElementById(id), v=el.value.trim(), bad=!v||(id==="email"&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v));
+      f.querySelector('[data-for="'+id+'"]').style.display=bad?"block":"none"; if(bad&&ok){ok=false;el.focus();}
+    });
+    if(!ok) return;
+    sessionStorage.setItem("kokoiko_booking",JSON.stringify({pid:pid,date:date,n:n,inf:inf,orderId:order.orderId,name:document.getElementById("name").value.trim(),line:document.getElementById("line").value.trim(),back:location.pathname+location.search}));
+    try{
+      await widgets.requestPayment({orderId:order.orderId,orderName:order.orderName,
+        successUrl:location.origin+"/success.html",failUrl:location.origin+"/fail.html",
+        customerEmail:document.getElementById("email").value.trim(),customerName:document.getElementById("name").value.trim()});
+    }catch(e){err.textContent="決済を開始できませんでした："+(e.message||e);}
+  };
+}catch(e){err.textContent="決済画面を読み込めませんでした。時間をおいて再度お試しください。（"+(e.message||e)+"）";payBtn.textContent="読み込みに失敗しました";}
+})();
+</script>
+</body></html>

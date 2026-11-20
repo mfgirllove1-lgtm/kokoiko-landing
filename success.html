@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>予約受付｜KOKOIKO</title>
+<meta name="description" content="ご予約を受け付けました">
+<meta property="og:title" content="予約受付｜KOKOIKO">
+<meta property="og:description" content="ご予約を受け付けました">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/assets/img/logo.jpg">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/assets/img/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/data.js"></script>
+
+</head>
+<body>
+<div class="testmode">テストモード：実際の請求は発生しません</div><header class="top"><div class="wrap">
+<a class="brand" href="/"><img src="/assets/img/logo.jpg" alt="KOKOIKO（ここいこ）ロゴ"><span>KOKOIKO<small>ここいこ</small></span></a>
+<a class="back" href="/">← トップへ戻る</a>
+</div></header>
+<main class="wrap center">
+<div id="loading" style="padding:60px 0">お支払いを確認しています…</div>
+<div id="ok" hidden>
+<div class="done-icon" aria-hidden="true">✓</div>
+<h1 style="font-size:22px;margin:0 0 4px">ご予約を受け付けました</h1>
+<p class="note">状態：<b>出発確定待ち</b></p>
+<div class="card" style="text-align:left;border:2px solid #06c755;margin-top:16px">
+<b>次にやること：LINEで友だち追加</b>
+<p class="note" style="margin:6px 0 10px">出発確定・集合場所と時間・中止時の返金のお知らせは、LINEでお届けします。</p>
+<a class="btn line" href="#" id="lineBtn">LINEで友だち追加する</a>
+<p class="note" style="margin:6px 0 0">※LINE公式アカウントのURLは準備中です。</p>
+</div>
+<div class="card" style="text-align:left;margin-top:14px">
+<div class="row"><span>注文番号</span><span id="oId">—</span></div>
+<div class="row"><span>ツアー</span><span id="oName">—</span></div>
+<div class="row"><span>出発日</span><span id="oDate">—</span></div>
+<div class="row"><span>人数</span><span id="oPeople">—</span></div>
+<div class="row total"><span>お支払い金額</span><span id="oAmount">—</span></div>
+</div>
+<div class="rule" style="text-align:left;margin-top:14px">最少催行人数（10名）に達したら、出発確定をLINEでお知らせします。出発3日前までに10名に満たない場合はツアー中止となり、全額返金します。</div>
+<p style="margin-top:20px"><a href="/">トップへ戻る</a></p>
+</div>
+<div id="ng" hidden style="padding:30px 0">
+<h1 style="font-size:20px">お支払いを完了できませんでした</h1>
+<p class="note" id="ngMsg"></p>
+<a class="btn" id="retry" href="/">もう一度お申し込みする</a>
+</div>
+</main>
+<footer><div class="wrap">
+<b>KOKOIKO（ここいこ）</b><br>
+所在地: 大韓民国 ソウル特別市 松坡区<br>
+お問い合わせ: LINE / メール（受付後のご連絡はLINE・メールで行います）
+<div style="margin-top:10px;line-height:1.6">事業者情報（韓国）<br>商号（상호）：{商号}<br>代表者（대표자명）：{代表者名}<br>事業者登録番号（사업자등록번호）：{事業者登録番号}<br>通信販売業申告番号（통신판매업 신고번호）：{通信販売業申告番号}<br>所在地（사업장 주소）：{住所}<br>電話番号（유선번호）：+82-{電話番号}</div>
+<ul>
+<li><a href="/tokushoho.html">特定商取引法に基づく表記</a></li>
+<li><a href="/tokushoho.html#cancel">キャンセルポリシー</a></li>
+<li><a href="/tokushoho.html#privacy">プライバシーポリシー</a></li>
+<li><a href="/tokushoho.html#terms">利用規約</a></li>
+</ul>
+<p style="margin-top:12px">© KOKOIKO</p>
+</div></footer>
+
+<script>
+(async function(){
+var K=window.KOKOIKO, q=new URLSearchParams(location.search), b={};
+try{b=JSON.parse(sessionStorage.getItem("kokoiko_booking")||"{}");}catch(e){}
+function ng(m){document.getElementById("loading").hidden=true;document.getElementById("ng").hidden=false;document.getElementById("ngMsg").textContent=m;if(b.back)document.getElementById("retry").href=b.back;}
+var key=q.get("paymentKey"), oid=q.get("orderId"), amt=q.get("amount");
+if(!key||!oid||!amt) return ng("決済情報が見つかりません。");
+try{
+  var r=await fetch("/api/confirm",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({paymentKey:key,orderId:oid,amount:Number(amt)})});
+  var d=await r.json();
+  if(!r.ok) return ng(d.message+"（"+d.code+"）");
+  document.getElementById("loading").hidden=true; document.getElementById("ok").hidden=false;
+  document.getElementById("oId").textContent=d.orderId;
+  document.getElementById("oAmount").textContent=(d.currency==="JPY"?K.fmtYen(d.totalAmount)+"（税込）":K.fmtKrw(d.totalAmount)+"（約"+K.fmtYen(K.yen(d.totalAmount))+"）");
+  if(b.pid&&K.products[b.pid]){document.getElementById("oName").textContent=K.products[b.pid].name;
+    document.getElementById("oDate").textContent=K.fmtDate(b.date);
+    document.getElementById("oPeople").textContent="大人・子ども "+b.n+"名"+(b.inf?"／2歳未満 "+b.inf+"名":"");}
+  sessionStorage.removeItem("kokoiko_booking");
+}catch(e){ng("通信エラーが発生しました。");}
+})();
+</script>
+</body></html>
