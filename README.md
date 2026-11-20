@@ -13,7 +13,7 @@
 | api/order.js | 상품ID·인원만 받고 금액·orderId는 서버가 결정 |
 | api/confirm.js | 서버 가격표와 금액 비교 → 토스 승인 요청 (시크릿 키는 여기서만) |
 | api/_products.js | 서버 가격표 (금액의 기준) |
-| assets/data.js | 화면 표시용 데이터, 엔화 환산 기준(100엔=870원, 1줄로 수정) |
+| data.js | 화면 표시용 데이터, 엔화 환산 기준(100엔=870원, 1줄로 수정) |
 
 ## 환경변수 (Vercel)
 - TOSS_CLIENT_KEY, TOSS_SECRET_KEY : 가이드 7-1의 문서용 테스트 키
