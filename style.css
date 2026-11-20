@@ -124,3 +124,9 @@ details p{margin:6px 0 0;font-size:13px;color:var(--sub)}
 .center{text-align:center}
 .done-icon{width:64px;height:64px;border-radius:50%;background:var(--grad);color:#fff;font-size:30px;display:flex;align-items:center;justify-content:center;margin:24px auto 10px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.hero.photo{background:#d9cdea}
+.hero.photo img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,35,64,0) 35%,rgba(43,35,64,.62) 100%)}
+.hero.photo .copy{position:relative;z-index:1}
+img.ph{width:100%;object-fit:cover;display:block;padding:0}
+img.thumb{object-fit:cover}
