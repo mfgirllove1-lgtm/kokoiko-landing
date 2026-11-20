@@ -126,7 +126,7 @@ details p{margin:6px 0 0;font-size:13px;color:var(--sub)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .hero.photo{background:#d9cdea}
 .hero.photo img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,35,64,0) 35%,rgba(43,35,64,.62) 100%)}
+.hero.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,138,138,.42) 0%,rgba(229,143,199,.36) 55%,rgba(201,162,245,.42) 100%),linear-gradient(180deg,rgba(43,35,64,0) 40%,rgba(43,35,64,.45) 100%)}
 .hero.photo .copy{position:relative;z-index:1}
 img.ph{width:100%;object-fit:cover;display:block;padding:0}
 img.thumb{object-fit:cover}
