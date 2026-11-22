@@ -138,3 +138,6 @@ img.thumb{object-fit:cover}
 .cmp tr.sum th,.cmp tr.sum td{background:#fff3f8;border-top:2px solid #e5658a}
 .cmp td[rowspan]{vertical-align:middle}
 table.cmp tbody th{white-space:nowrap;width:4.6em}
+table.cmp td.k{word-break:keep-all}
+header.top .back{display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
+.grid2 .price small{display:block;margin-top:2px}
