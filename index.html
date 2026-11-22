@@ -64,7 +64,8 @@
 <div class="grid2">
 <a class="tour" href="/gangneung.html"><img class="ph" src="https://images.unsplash.com/photo-1669303215070-151cc2e5887e?w=600&q=70&auto=format&fit=crop" alt="江陵の海辺に立つ女性" loading="lazy"><div class="body"><h3>大関嶺の山と江陵（カンヌン）の海を巡る旅</h3><div class="price"><span data-yen="90000">約¥—</span><small>（税込）/大人1名</small></div></div></a>
 <a class="tour" href="/danyang.html"><img class="ph" src="https://images.unsplash.com/photo-1789390565792-f6b6b5405722?w=600&q=70&auto=format&fit=crop" alt="丹陽の山あいを流れる川" loading="lazy"><div class="body"><h3>韓国の絶景・癒しの旅 ～丹陽（タニャン）～</h3><div class="price"><span data-yen="90000">約¥—</span><small>（税込）/大人1名</small></div></div></a>
-</div></section>
+</div>
+<p class="note"><span class="rate-note"></span></p></section>
 
 <section><h2>こんな方におすすめ</h2>
 <div class="card"><ul style="margin:0;padding-left:18px">
@@ -87,7 +88,7 @@
 <b>KOKOIKO（ここいこ）</b><br>
 所在地: 大韓民国 ソウル特別市 松坡区<br>
 お問い合わせ: LINE / メール（受付後のご連絡はLINE・メールで行います）
-<div style="margin-top:10px;line-height:1.6">事業者情報（韓国）<br>商号（상호）：{商号}<br>代表者（대표자명）：{代表者名}<br>事業者登録番号（사업자등록번호）：{事業者登録番号}<br>通信販売業申告番号（통신판매업 신고번호）：{通信販売業申告番号}<br>所在地（사업장 주소）：{住所}<br>電話番号（유선번호）：+82-{電話番号}</div>
+<div style="margin-top:10px;line-height:1.6">事業者情報（韓国／사업자 정보）：確認中<br><span style="font-size:11px">商号・代表者・事業者登録番号・通信販売業申告番号・電話番号は、正式な登録後に掲載します。</span></div>
 <ul>
 <li><a href="/tokushoho.html">特定商取引法に基づく表記</a></li>
 <li><a href="/tokushoho.html#cancel">キャンセルポリシー</a></li>
@@ -100,9 +101,9 @@
 <script>
 (function(){
 var K=window.KOKOIKO, info={"jeonju-damyang": {"short": "全州・潭陽", "krw": 100000, "hours": "約4時間", "first": "竹緑苑（チュンノグォン）の竹林でゆったり散策", "photo": "https://images.unsplash.com/photo-1653230675261-fe00bde32c8e?w=300&q=70&auto=format&fit=crop"}, "gangneung": {"short": "江陵", "krw": 90000, "hours": "約2時間半", "first": "大関嶺羊牧場で草原と羊とのふれあい", "photo": "https://images.unsplash.com/photo-1669303215070-151cc2e5887e?w=300&q=70&auto=format&fit=crop"}, "danyang": {"short": "丹陽", "krw": 90000, "hours": "約3時間半", "first": "山に抱かれた名刹・救仁寺（クインサ）", "photo": "https://images.unsplash.com/photo-1789390565792-f6b6b5405722?w=300&q=70&auto=format&fit=crop"}};
-document.querySelectorAll('[data-yen]').forEach(function(e){e.textContent="約"+K.fmtYen(K.yen(+e.dataset.yen));});
+var cur="jeonju-damyang";
 function show(pid){
-  var c=info[pid]; document.getElementById("sheet").href="/"+pid+".html";
+  cur=pid; var c=info[pid]; document.getElementById("sheet").href="/"+pid+".html";
   document.getElementById("sheetName").textContent=c.short+"ツアー";document.getElementById("sheetThumb").src=c.photo;
   document.getElementById("sheetInfo").textContent="ソウルから"+c.hours+"／約"+K.fmtYen(K.yen(c.krw))+"（税込）/大人1名";
   document.querySelectorAll(".pin").forEach(function(g){g.classList.toggle("active",g.dataset.pin===pid);});
@@ -111,7 +112,7 @@ document.querySelectorAll(".pin").forEach(function(g){
   g.addEventListener("click",function(){show(g.dataset.pin);});
   g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();show(g.dataset.pin);}});
 });
-show("jeonju-damyang");
+K.onRate(function(){show(cur);});
 })();
 </script>
 </body></html>

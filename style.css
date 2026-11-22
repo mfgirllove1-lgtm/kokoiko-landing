@@ -135,3 +135,6 @@ img.thumb{object-fit:cover}
 .mapbox .sheet{position:absolute;left:10px;right:10px;bottom:10px;margin:0}
 .maplegend{position:absolute;top:10px;left:12px;font-size:11px;color:#6b6280;background:rgba(255,255,255,.85);padding:2px 8px;border-radius:99px}
 .maplegend i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#cfc8da;margin-right:4px}
+.cmp tr.sum th,.cmp tr.sum td{background:#fff3f8;border-top:2px solid #e5658a}
+.cmp td[rowspan]{vertical-align:middle}
+table.cmp tbody th{white-space:nowrap;width:4.6em}

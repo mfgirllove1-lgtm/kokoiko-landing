@@ -53,7 +53,7 @@
 <b>KOKOIKO（ここいこ）</b><br>
 所在地: 大韓民国 ソウル特別市 松坡区<br>
 お問い合わせ: LINE / メール（受付後のご連絡はLINE・メールで行います）
-<div style="margin-top:10px;line-height:1.6">事業者情報（韓国）<br>商号（상호）：{商号}<br>代表者（대표자명）：{代表者名}<br>事業者登録番号（사업자등록번호）：{事業者登録番号}<br>通信販売業申告番号（통신판매업 신고번호）：{通信販売業申告番号}<br>所在地（사업장 주소）：{住所}<br>電話番号（유선번호）：+82-{電話番号}</div>
+<div style="margin-top:10px;line-height:1.6">事業者情報（韓国／사업자 정보）：確認中<br><span style="font-size:11px">商号・代表者・事業者登録番号・通信販売業申告番号・電話番号は、正式な登録後に掲載します。</span></div>
 <ul>
 <li><a href="/tokushoho.html">特定商取引法に基づく表記</a></li>
 <li><a href="/tokushoho.html#cancel">キャンセルポリシー</a></li>
@@ -74,6 +74,7 @@ try{
   var r=await fetch("/api/confirm",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({paymentKey:key,orderId:oid,amount:Number(amt)})});
   var d=await r.json();
   if(!r.ok) return ng(d.message+"（"+d.code+"）");
+  await K.rateReady;
   document.getElementById("loading").hidden=true; document.getElementById("ok").hidden=false;
   document.getElementById("oId").textContent=d.orderId;
   document.getElementById("oAmount").textContent=(d.currency==="JPY"?K.fmtYen(d.totalAmount)+"（税込）":K.fmtKrw(d.totalAmount)+"（約"+K.fmtYen(K.yen(d.totalAmount))+"）");
